@@ -58,22 +58,48 @@ function handleKeyUp(e: KeyboardEvent) {
       (location.href.includes(`nation=${document.body.dataset.nname}`) ||
         !location.href.includes("/nation="))
     ) {
-      if ($("span.fancylike")?.textContent?.includes("Military")) {
-        $<HTMLButtonElement>(
-          '.button[name="convertproduction"][value^="nukes"]'
-        )?.click();
-      } else if ($("span.fancylike")?.textContent?.includes("Strategic")) {
-        $<HTMLButtonElement>(
-          '.button[name="convertproduction"][value^="shield"]'
-        )?.click();
-      } else if ($("span.fancylike")?.textContent?.includes("Economic")) {
-        $<HTMLButtonElement>(
-          '.button[name="convertproduction"][value^="shield"]'
-        )?.click();
-      } else if ($("span.fancylike")?.textContent?.includes("Intel")) {
-        $<HTMLButtonElement>(
-          '.button[name="convertproduction"][value^="shield"]'
-        )?.click();
+      const specialistType = $("span.fancylike")?.textContent;
+      const production = Number(
+        $(".nukestat-production")?.textContent?.match(/\d+/)?.[0]
+      );
+
+      switch (specialistType) {
+        // milspec ratio 3:2 (nukes:production)
+        case "Military Specialist":
+          if (production < 2) return;
+          assign(
+            `${location.pathname}?convertproduction=nukes:${Math.floor(
+              production * 1.5
+            )}`
+          );
+          break;
+        // intspec ratio 1:1 (nukes:production)
+        case "Intel Specialist":
+          if (production < 1) return;
+          assign(
+            `${location.pathname}?convertproduction=nukes:${Math.floor(
+              production
+            )}`
+          );
+          break;
+        // stratspec ratio 3:4 (shields:production)
+        case "Strategic Specialist":
+          if (production < 4) return;
+          assign(
+            `${location.pathname}?convertproduction=shield:${Math.floor(
+              Math.floor(production / 4) * 3
+            )}`
+          );
+          break;
+        // econspec ratio 1:2 (shields:production)
+        case "Economic Specialist":
+          if (production < 2) return;
+          assign(
+            `${location.pathname}?convertproduction=shield:${Math.floor(
+              Math.floor(production / 2)
+            )}`
+          );
+          break;
       }
     } else {
       assign("/page=nukes/view=production");
@@ -87,9 +113,33 @@ function handleKeyUp(e: KeyboardEvent) {
       (location.href.includes("nation=" + document.body.dataset.nname) ||
         !location.href.includes("/nation="))
     ) {
-      $<HTMLButtonElement>(
-        '.button[name="convertproduction"][value^="nukes"]'
-      )?.click();
+      const specialistType = $("span.fancylike")?.textContent;
+      const production = Number(
+        $(".nukestat-production")?.textContent?.match(/\d+/)?.[0]
+      );
+
+      switch (specialistType) {
+        // milspec ratio 3:2 (nukes:production)
+        case "Military Specialist":
+          if (production < 2) return;
+          assign(
+            `${location.pathname}?convertproduction=nukes:${Math.floor(
+              production * 1.5
+            )}`
+          );
+          break;
+        // others ratio 1:1 (nukes:production)
+        case "Intel Specialist":
+        case "Strategic Specialist":
+        case "Economic Specialist":
+          if (production < 1) return;
+          assign(
+            `${location.pathname}?convertproduction=nukes:${Math.floor(
+              production
+            )}`
+          );
+          break;
+      }
     } else {
       assign("/page=nukes/view=production");
     }
@@ -102,9 +152,33 @@ function handleKeyUp(e: KeyboardEvent) {
       (location.href.includes(`nation=${document.body.dataset.nname}`) ||
         !location.href.includes("/nation="))
     ) {
-      $<HTMLButtonElement>(
-        '.button[name="convertproduction"][value^="shield"]'
-      )?.click();
+      const specialistType = $("span.fancylike")?.textContent;
+      const production = Number(
+        $(".nukestat-production")?.textContent?.match(/\d+/)?.[0]
+      );
+
+      switch (specialistType) {
+        // stratspec ratio 3:4 (shields:production)
+        case "Strategic Specialist":
+          if (production < 4) return;
+          assign(
+            `${location.pathname}?convertproduction=shield:${Math.floor(
+              Math.floor(production / 4) * 3
+            )}`
+          );
+          break;
+        // others ratio 1:2 (shields:production)
+        case "Military Specialist":
+        case "Intel Specialist":
+        case "Economic Specialist":
+          if (production < 2) return;
+          assign(
+            `${location.pathname}?convertproduction=shield:${Math.floor(
+              Math.floor(production / 2)
+            )}`
+          );
+          break;
+      }
     } else {
       assign("/page=nukes/view=production");
     }
