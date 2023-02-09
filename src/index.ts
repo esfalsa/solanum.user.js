@@ -11,7 +11,21 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-document.addEventListener("keyup", (e) => {
+document.addEventListener("keyup", handleKeyUp);
+
+let disabled = false;
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    disabled = false;
+  }
+});
+
+function handleKeyUp(e: KeyboardEvent) {
+  if (disabled) {
+    return;
+  }
+
   if (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) {
     return;
   }
@@ -34,7 +48,7 @@ document.addEventListener("keyup", (e) => {
   }
   // Page listing all factions (F)
   else if (e.code === "KeyF") {
-    location.assign("/page=factions");
+    assign("/page=factions");
   }
   // Convert Production (P, P)
   else if (e.code === "KeyP") {
@@ -62,7 +76,7 @@ document.addEventListener("keyup", (e) => {
         )?.click();
       }
     } else {
-      location.assign("/page=nukes/view=production");
+      assign("/page=nukes/view=production");
     }
   }
   // Convert Production to Nukes (W, W)
@@ -77,7 +91,7 @@ document.addEventListener("keyup", (e) => {
         '.button[name="convertproduction"][value^="nukes"]'
       )?.click();
     } else {
-      location.assign("/page=nukes/view=production");
+      assign("/page=nukes/view=production");
     }
   }
   // Convert Production to Shields (S, S)
@@ -92,7 +106,7 @@ document.addEventListener("keyup", (e) => {
         '.button[name="convertproduction"][value^="shield"]'
       )?.click();
     } else {
-      location.assign("/page=nukes/view=production");
+      assign("/page=nukes/view=production");
     }
   }
   // Your Nukes, Your Faction (Spacebar, Spacebar)
@@ -103,9 +117,9 @@ document.addEventListener("keyup", (e) => {
       (location.href.includes(`nation=${document.body.dataset.nname}`) ||
         !location.href.includes("/nation="))
     ) {
-      location.assign(`/page=faction/fid=${facID}`);
+      assign(`/page=faction/fid=${facID}`);
     } else {
-      location.assign("/page=nukes");
+      assign("/page=nukes");
     }
   }
   // View and Shield Incoming (M, M)
@@ -123,12 +137,12 @@ document.addEventListener("keyup", (e) => {
       }
       // reload the page to check for new incoming nukes
       else {
-        location.assign(`/page=faction/fid=${facID}/view=incoming`);
+        assign(`/page=faction/fid=${facID}/view=incoming`);
       }
     }
     // if we're not on the incoming nukes page
     else {
-      location.assign(`/page=faction/fid=${facID}/view=incoming`);
+      assign(`/page=faction/fid=${facID}/view=incoming`);
     }
   }
   // Perform Targetting (K, K, K, K)
@@ -155,9 +169,7 @@ document.addEventListener("keyup", (e) => {
         ]?.href;
         const regexFindNation = /(?<=nation=).*(?=\/page=nukes)/g;
         const nationToTarget = linkToTarget?.match(regexFindNation)?.[0];
-        location.assign(
-          `/nation=${nationToTarget}/page=nukes?target=${nationToTarget}`
-        );
+        assign(`/nation=${nationToTarget}/page=nukes?target=${nationToTarget}`);
       } else {
         $<HTMLAnchorElement>('a[href^="view=nations?start="]')?.click();
       }
@@ -195,9 +207,7 @@ document.addEventListener("keyup", (e) => {
           }
         });
       } else {
-        location.assign(
-          `${$(".factionname")?.getAttribute("href")}/view=nations`
-        );
+        assign(`${$(".factionname")?.getAttribute("href")}/view=nations`);
       }
     }
   }
@@ -219,17 +229,24 @@ document.addEventListener("keyup", (e) => {
         location.reload();
       }
     } else {
-      location.assign("/page=nukes/view=targets");
+      assign("/page=nukes/view=targets");
     }
   }
   // Go to Puppet Login (\)
   else if (e.code === "Backslash") {
-    location.assign("/page=blank/puppetlist");
+    assign("/page=blank/puppetlist");
   }
   // Join faction (J)
   else if (e.code === "KeyJ") {
-    location.assign(
-      `/page=faction/fid=${facID}?consider_join_faction=1&join_faction=1`
-    );
+    assign(`/page=faction/fid=${facID}?consider_join_faction=1&join_faction=1`);
   }
-});
+}
+
+/**
+ * Navigates to the given URL and disables keybinds.
+ * @param url The URL to navigate to.
+ */
+function assign(url: string | URL) {
+  location.assign(url);
+  disabled = true;
+}
