@@ -3,6 +3,7 @@
     "target": "ESNext",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "removeComments": true
   }
 }
