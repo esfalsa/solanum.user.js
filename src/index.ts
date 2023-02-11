@@ -21,6 +21,13 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
+/**
+ * Generate a random integer between zero (inclusive) and `max` (exclusive)
+ */
+function randInt(max: number) {
+  return Math.floor(Math.random() * max);
+}
+
 function handleKeyUp(e: KeyboardEvent) {
   if (disabled) {
     return;
@@ -86,9 +93,9 @@ function handleKeyUp(e: KeyboardEvent) {
         case "Strategic Specialist":
           if (production < 4) return;
           assign(
-            `${location.pathname}?convertproduction=shield:${Math.floor(
+            `${location.pathname}?convertproduction=shield:${
               Math.floor(production / 4) * 3
-            )}`
+            }`
           );
           break;
         // econspec ratio 1:2 (shields:production)
@@ -96,7 +103,7 @@ function handleKeyUp(e: KeyboardEvent) {
           if (production < 2) return;
           assign(
             `${location.pathname}?convertproduction=shield:${Math.floor(
-              Math.floor(production / 2)
+              production / 2
             )}`
           );
           break;
@@ -162,9 +169,9 @@ function handleKeyUp(e: KeyboardEvent) {
         case "Strategic Specialist":
           if (production < 4) return;
           assign(
-            `${location.pathname}?convertproduction=shield:${Math.floor(
+            `${location.pathname}?convertproduction=shield:${
               Math.floor(production / 4) * 3
-            )}`
+            }`
           );
           break;
         // others ratio 1:2 (shields:production)
@@ -174,7 +181,7 @@ function handleKeyUp(e: KeyboardEvent) {
           if (production < 2) return;
           assign(
             `${location.pathname}?convertproduction=shield:${Math.floor(
-              Math.floor(production / 2)
+              production / 2
             )}`
           );
           break;
@@ -203,7 +210,7 @@ function handleKeyUp(e: KeyboardEvent) {
       // shield a random incoming set in the list
       if ($$('.button[name="defend"]').length > 0) {
         $$<HTMLButtonElement>('.button[name="defend"]')[
-          Math.floor(Math.random() * $$('.button[name="defend"]').length)
+          randInt($$('.button[name="defend"]').length)
         ]?.click();
         // any additional code if there's a captcha/additional choice?
       } else if ($('a[href*="view=incoming?start="]')) {
@@ -226,7 +233,12 @@ function handleKeyUp(e: KeyboardEvent) {
       location.href.includes("page=faction") &&
       !location.href.includes("view=nations")
     ) {
-      $<HTMLAnchorElement>("a.nukestat-nations")?.click();
+      const nations = Number(
+        $(".nukestat-nations")?.textContent?.replaceAll(/\D/g, "")
+      );
+      assign(
+        `${location.pathname}/view=nations?start=${randInt(nations - 50)}`
+      );
     }
     // if on the faction's list of nations, choose a random non-fully-irradiated nation
     else if (
@@ -236,11 +248,7 @@ function handleKeyUp(e: KeyboardEvent) {
       if ($("ol li:not(:has(.nukedestroyedicon)) a")) {
         const linkToTarget = $$<HTMLAnchorElement>(
           "ol li:not(:has(.nukedestroyedicon)) a"
-        )[
-          Math.floor(
-            Math.random() * $$("ol li:not(:has(.nukedestroyedicon)) a").length
-          )
-        ]?.href;
+        )[randInt($$("ol li:not(:has(.nukedestroyedicon)) a").length)]?.href;
         const regexFindNation = /nation=(?<nation>.*)\/page=nukes/;
         const nationToTarget =
           linkToTarget?.match(regexFindNation)?.groups?.nation;
