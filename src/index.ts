@@ -241,8 +241,9 @@ function handleKeyUp(e: KeyboardEvent) {
             Math.random() * $$("ol li:not(:has(.nukedestroyedicon)) a").length
           )
         ]?.href;
-        const regexFindNation = /(?<=nation=).*(?=\/page=nukes)/g;
-        const nationToTarget = linkToTarget?.match(regexFindNation)?.[0];
+        const regexFindNation = /nation=(?<nation>.*)\/page=nukes/;
+        const nationToTarget =
+          linkToTarget?.match(regexFindNation)?.groups?.nation;
         assign(`/nation=${nationToTarget}/page=nukes?target=${nationToTarget}`);
       } else {
         $<HTMLAnchorElement>('a[href^="view=nations?start="]')?.click();
