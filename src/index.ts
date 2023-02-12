@@ -245,13 +245,14 @@ function handleKeyUp(e: KeyboardEvent) {
       location.href.includes("page=faction") &&
       location.href.includes("view=nations")
     ) {
-      if ($("ol li:not(:has(.nukedestroyedicon)) a")) {
-        const linkToTarget = $$<HTMLAnchorElement>(
-          "ol li:not(:has(.nukedestroyedicon)) a"
-        )[randInt($$("ol li:not(:has(.nukedestroyedicon)) a").length)]?.href;
-        const regexFindNation = /nation=(?<nation>.*)\/page=nukes/;
-        const nationToTarget =
-          linkToTarget?.match(regexFindNation)?.groups?.nation;
+      if ($("ol li:not(:has(.nukedestroyedicon)) a.nlink")) {
+        const targets = $$<HTMLAnchorElement>(
+          "ol li:not(:has(.nukedestroyedicon)) a.nlink"
+        );
+        const linkToTarget = targets[randInt(targets.length)]?.href;
+        const nationToTarget = linkToTarget?.match(
+          /nation=(?<nation>.*)\/page=nukes/
+        )?.groups?.nation;
         assign(`/nation=${nationToTarget}/page=nukes?target=${nationToTarget}`);
       } else {
         $<HTMLAnchorElement>('a[href^="view=nations?start="]')?.click();
@@ -275,22 +276,13 @@ function handleKeyUp(e: KeyboardEvent) {
       const already = alreadyTargeted + alreadyRads + alreadyIncoming;
 
       // if not enough are already targeted/rad/incoming at the nation, fire more, otherwise go back to the faction list
-      if (already < 100 && $('.button[name="nukes"]')) {
-        const minToTarget = 100 - already;
-        const maxToTarget = minToTarget + 15;
+      if (alreadyRads < 100 && already < 110 && $('.button[name="nukes"]')) {
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.append("nukes", (110 - already).toString());
 
-        // choose the number of nukes within the right range
-        $$('.button[name="nukes"]').forEach((element) => {
-          const buttonValue = Number(element.getAttribute("value"));
-          if (buttonValue <= maxToTarget) {
-            const currentWindow = location.href;
-            location.href = currentWindow + "&nukes=" + buttonValue;
-            // any additional code if there's a captcha/additional choice?
-            return false;
-          }
-        });
+        assign(`${location.pathname}?${searchParams.toString()}`);
       } else {
-        assign(`${$(".factionname")?.getAttribute("href")}/view=nations`);
+        $<HTMLAnchorElement>("a.factionname")?.click();
       }
     }
   }
