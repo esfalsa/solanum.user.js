@@ -255,7 +255,7 @@ function handleKeyUp(e: KeyboardEvent) {
         )?.groups?.nation;
         assign(`/nation=${nationToTarget}/page=nukes?target=${nationToTarget}`);
       } else {
-        $<HTMLAnchorElement>('a[href^="view=nations?start="]')?.click();
+        $<HTMLAnchorElement>('a[href*="view=nations?start="]')?.click();
       }
     }
     // if on the targetting page, calculate the appropriate number of nukes to target
