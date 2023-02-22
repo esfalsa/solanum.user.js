@@ -8,15 +8,16 @@
 
 ## Usage Instructions
 
-| **Key**                                                | **Function**                         |
-| ------------------------------------------------------ | ------------------------------------ |
-| <kbd>N</kbd>                                           | Reload                               |
-| <kbd>,</kbd>                                           | Back                                 |
-| <kbd>F</kbd>                                           | Faction list                         |
-| <kbd>P</kbd>, <kbd>P</kbd>                             | Produce automatically                |
-| <kbd>W</kbd>, <kbd>W</kbd>                             | Produce nukes                        |
-| <kbd>S</kbd>, <kbd>S</kbd>                             | Produce shields                      |
-| <kbd>space</kbd>, <kbd>space</kbd>                     | Toggle nukes page and faction page   |
-| <kbd>M</kbd>, <kbd>M</kbd>                             | Shield incoming                      |
-| <kbd>K</kbd>, <kbd>K</kbd>, <kbd>K</kbd>, <kbd>K</kbd> | Target nations (from a faction page) |
-| <kbd>L</kbd>, <kbd>L</kbd>, <kbd>L</kbd>               | Launch nukes                         |
+| **Key**                                                | **Function**                                        |
+| ------------------------------------------------------ | --------------------------------------------------- |
+| <kbd>N</kbd>                                           | Reload                                              |
+| <kbd>,</kbd>                                           | Back                                                |
+| <kbd>F</kbd>                                           | Faction list                                        |
+| <kbd>P</kbd>, <kbd>P</kbd>                             | Produce automatically                               |
+| <kbd>W</kbd>, <kbd>W</kbd>                             | Produce nukes                                       |
+| <kbd>S</kbd>, <kbd>S</kbd>                             | Produce shields                                     |
+| <kbd>space</kbd>, <kbd>space</kbd>                     | Toggle nukes page and faction page                  |
+| <kbd>M</kbd>, <kbd>M</kbd>                             | Shield incoming                                     |
+| <kbd>K</kbd>, <kbd>K</kbd>, <kbd>K</kbd>, <kbd>K</kbd> | Target nations (from a faction page)                |
+| <kbd>L</kbd>, <kbd>L</kbd>, <kbd>L</kbd>               | Launch nukes                                        |
+| <kbd>J</kbd>                                           | Join faction (may need manual CAPTCHA confirmation) |
