@@ -1,7 +1,7 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
-const facID = "95"; // update when N-Day starts!
+const facID = "27"; // update when N-Day starts!
 
 document.addEventListener("keydown", (e) => {
   // Stops the spacebar from scrolling
