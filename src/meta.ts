@@ -5,7 +5,8 @@
 // @description N-Day keybinds.
 // @author      Pronoun
 // @match       *://*.nationstates.net/*
-// @grant       none
+// @grant       window.close
+// @grant       GM.closeTab
 // @downloadURL https://esfalsa.github.io/solanum.user.js/solanum.user.js
 // @supportURL  https://esfalsa.github.io/solanum.user.js
 // @homepageURL https://esfalsa.github.io/solanum.user.js

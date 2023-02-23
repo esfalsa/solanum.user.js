@@ -21,3 +21,4 @@
 | <kbd>K</kbd>, <kbd>K</kbd>, <kbd>K</kbd>, <kbd>K</kbd> | Target nations (from a faction page)                |
 | <kbd>L</kbd>, <kbd>L</kbd>, <kbd>L</kbd>               | Launch nukes                                        |
 | <kbd>J</kbd>                                           | Join faction (may need manual CAPTCHA confirmation) |
+| <kbd>C</kbd>                                           | Close tab (not supported on Safari)                 |

@@ -45,8 +45,13 @@ function handleKeyUp(e: KeyboardEvent) {
     return;
   }
 
+  // Close tab (C)
+  if (e.code === "KeyC") {
+    window.close();
+  }
+
   // Go Back (,)
-  if (e.code === "Comma") {
+  else if (e.code === "Comma") {
     history.back();
   }
   // Refresh (N)
