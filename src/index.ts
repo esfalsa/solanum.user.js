@@ -255,10 +255,19 @@ function handleKeyUp(e: KeyboardEvent) {
       );
       const already = alreadyTargeted + alreadyRads + alreadyIncoming;
 
+      const available = Number(
+        $(".nukeselfview .nukestat-nukes")?.textContent?.match(
+          regexFindNumber
+        )?.[0]
+      );
+
       // if not enough are already targeted/rad/incoming at the nation, fire more, otherwise go back to the faction list
       if (alreadyRads < 100 && already < 110 && $('.button[name="nukes"]')) {
         const searchParams = new URLSearchParams(location.search);
-        searchParams.append("nukes", (110 - already).toString());
+        searchParams.append(
+          "nukes",
+          Math.min(110 - already, available).toString()
+        );
 
         assign(`${location.pathname}?${searchParams.toString()}`);
       } else {
