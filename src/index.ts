@@ -318,8 +318,14 @@ function produce(type: "nukes" | "shield", amount: number) {
     "input#g-recaptcha-response"
   )?.value;
 
-  assignSearch({
-    convertproduction: `${type}:${amount}`,
-    ...(captchaResponse && { "g-recaptcha-response": captchaResponse }),
-  });
+  if (captchaResponse) {
+    assignSearch({
+      convertproduction: `${type}:${amount}`,
+      ...(captchaResponse && { "g-recaptcha-response": captchaResponse }),
+    });
+  } else {
+    $<HTMLButtonElement>(
+      `.button[name="convertproduction"][value^="${type}"]`
+    )?.click();
+  }
 }
