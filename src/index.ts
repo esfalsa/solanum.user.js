@@ -229,10 +229,11 @@ function handleKeyUp(e: KeyboardEvent) {
       location.href.includes("page=faction") &&
       location.href.includes("view=nations")
     ) {
-      if ($("ol li:not(:has(.nukedestroyedicon)) a.nlink")) {
-        const targets = $$<HTMLAnchorElement>(
-          "ol li:not(:has(.nukedestroyedicon)) a.nlink"
-        );
+      const targets = [...$$<HTMLAnchorElement>("ol li a.nlink")].filter(
+        (node) => !node.querySelector(".nukedestroyedicon")
+      );
+
+      if (targets.length) {
         const linkToTarget = targets[randInt(targets.length)]?.href;
         const nationToTarget = linkToTarget?.match(
           /nation=(?<nation>.*)\/page=nukes/
