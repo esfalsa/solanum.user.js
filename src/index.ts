@@ -79,38 +79,22 @@ function handleKeyUp(e: KeyboardEvent) {
         // milspec ratio 3:2 (nukes:production)
         case "Military Specialist":
           if (production < 2) return;
-          assign(
-            `${location.pathname}?convertproduction=nukes:${Math.floor(
-              production * 1.5
-            )}`
-          );
+          produce("nukes", Math.floor(production * 1.5));
           break;
         // intspec ratio 1:1 (nukes:production)
         case "Intel Specialist":
           if (production < 1) return;
-          assign(
-            `${location.pathname}?convertproduction=nukes:${Math.floor(
-              production
-            )}`
-          );
+          produce("nukes", Math.floor(production));
           break;
         // stratspec ratio 3:4 (shields:production)
         case "Strategic Specialist":
           if (production < 4) return;
-          assign(
-            `${location.pathname}?convertproduction=shield:${
-              Math.floor(production / 4) * 3
-            }`
-          );
+          produce("shield", Math.floor(production / 4) * 3);
           break;
         // econspec ratio 1:2 (shields:production)
         case "Economic Specialist":
           if (production < 2) return;
-          assign(
-            `${location.pathname}?convertproduction=shield:${Math.floor(
-              production / 2
-            )}`
-          );
+          produce("shield", Math.floor(production / 2));
           break;
       }
     } else {
@@ -134,22 +118,14 @@ function handleKeyUp(e: KeyboardEvent) {
         // milspec ratio 3:2 (nukes:production)
         case "Military Specialist":
           if (production < 2) return;
-          assign(
-            `${location.pathname}?convertproduction=nukes:${Math.floor(
-              production * 1.5
-            )}`
-          );
+          produce("nukes", Math.floor(production * 1.5));
           break;
         // others ratio 1:1 (nukes:production)
         case "Intel Specialist":
         case "Strategic Specialist":
         case "Economic Specialist":
           if (production < 1) return;
-          assign(
-            `${location.pathname}?convertproduction=nukes:${Math.floor(
-              production
-            )}`
-          );
+          produce("nukes", Math.floor(production));
           break;
       }
     } else {
@@ -173,22 +149,14 @@ function handleKeyUp(e: KeyboardEvent) {
         // stratspec ratio 3:4 (shields:production)
         case "Strategic Specialist":
           if (production < 4) return;
-          assign(
-            `${location.pathname}?convertproduction=shield:${
-              Math.floor(production / 4) * 3
-            }`
-          );
+          produce("shield", Math.floor(production / 4) * 3);
           break;
         // others ratio 1:2 (shields:production)
         case "Military Specialist":
         case "Intel Specialist":
         case "Economic Specialist":
           if (production < 2) return;
-          assign(
-            `${location.pathname}?convertproduction=shield:${Math.floor(
-              production / 2
-            )}`
-          );
+          produce("shield", Math.floor(production / 2));
           break;
       }
     } else {
@@ -329,4 +297,22 @@ function handleKeyUp(e: KeyboardEvent) {
 function assign(url: string | URL) {
   location.assign(url);
   disabled = true;
+}
+
+function assignSearch(
+  params: ConstructorParameters<typeof URLSearchParams>[0]
+) {
+  console.log(`${location.pathname}?${new URLSearchParams(params)}`);
+  assign(`${location.pathname}?${new URLSearchParams(params)}`);
+}
+
+function produce(type: "nukes" | "shield", amount: number) {
+  const captchaResponse = $<HTMLInputElement>(
+    "input#g-recaptcha-response"
+  )?.value;
+
+  assignSearch({
+    convertproduction: `${type}:${amount}`,
+    ...(captchaResponse && { "g-recaptcha-response": captchaResponse }),
+  });
 }
