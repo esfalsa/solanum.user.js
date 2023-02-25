@@ -216,9 +216,13 @@ function handleKeyUp(e: KeyboardEvent) {
       const nations = Number(
         $(".nukestat-nations")?.textContent?.replaceAll(/\D/g, "")
       );
-      assign(
-        `${location.pathname}/view=nations?start=${randInt(nations - 50)}`
-      );
+      if (nations > 50) {
+        assign(
+          `${location.pathname}/view=nations?start=${randInt(nations - 50)}`
+        );
+      } else {
+        assign(`${location.pathname}/view=nations`);
+      }
     }
     // if on the faction's list of nations, choose a random non-fully-irradiated nation
     else if (
