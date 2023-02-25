@@ -3,6 +3,13 @@ const $$ = document.querySelectorAll.bind(document);
 
 const facID = "27"; // update when N-Day starts!
 
+// clear production query parameters
+if (location.search.includes("convertproduction")) {
+  const currentPage = new URL(location.href);
+  currentPage.searchParams.delete("convertproduction");
+  history.replaceState(null, "", currentPage);
+}
+
 document.addEventListener("keydown", (e) => {
   // Stops the spacebar from scrolling
   if (e.code === "Space" && e.target === document.body) {
