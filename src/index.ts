@@ -49,7 +49,16 @@ function handleKeyUp(e: KeyboardEvent) {
   if (e.code === "KeyC") {
     window.close();
   }
-
+  // Toggle template (T)
+  else if (e.code === "KeyT") {
+    if (location.pathname.includes("/template-overall=none")) {
+      location.replace(
+        location.pathname.replaceAll("/template-overall=none", "")
+      );
+    } else {
+      location.replace(`/template-overall=none${location.pathname}`);
+    }
+  }
   // Go Back (,)
   else if (e.code === "Comma") {
     history.back();
