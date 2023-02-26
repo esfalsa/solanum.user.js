@@ -229,9 +229,9 @@ function handleKeyUp(e: KeyboardEvent) {
       location.href.includes("page=faction") &&
       location.href.includes("view=nations")
     ) {
-      const targets = [...$$<HTMLAnchorElement>("ol li a.nlink")].filter(
-        (node) => !node.querySelector(".nukedestroyedicon")
-      );
+      const targets = [...$$<HTMLAnchorElement>("ol li")]
+        .filter((node) => !node.querySelector(".nukedestroyedicon"))
+        .map((node) => node.querySelector<HTMLAnchorElement>("a.nlink"));
 
       if (targets.length) {
         const linkToTarget = targets[randInt(targets.length)]?.href;
