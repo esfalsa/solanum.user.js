@@ -267,11 +267,11 @@ function handleKeyUp(e: KeyboardEvent) {
       );
 
       // if not enough are already targeted/rad/incoming at the nation, fire more, otherwise go back to the faction list
-      if (alreadyRads < 100 && already < 110 && $('.button[name="nukes"]')) {
+      if (alreadyRads < 100 && already < 175 && $('.button[name="nukes"]')) {
         const searchParams = new URLSearchParams(location.search);
         searchParams.append(
           "nukes",
-          Math.min(110 - already, available).toString()
+          Math.min(175 - already, available).toString()
         );
 
         assign(`${location.pathname}?${searchParams.toString()}`);
